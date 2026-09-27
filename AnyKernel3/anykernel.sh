@@ -4,14 +4,14 @@
 ### AnyKernel setup
 # global properties
 properties() { '
-kernel.string=Prime Kernel by pascua28 @ xda-developers
+kernel.string=Prime Kernel (LostPrime) SukiSU+KPM+Tools
 do.devicecheck=1
 do.modules=0
 do.systemless=1
 do.cleanup=1
 do.cleanuponabort=0
-device.name1=
-device.name2=
+device.name1=m51
+device.name2=m51nsxx
 device.name3=
 device.name4=
 device.name5=
@@ -47,7 +47,7 @@ oneui=$(file_getprop /system/build.prop ro.build.version.oneui);
 patch_cmdline "android.is_aosp" "";
 
 if [ "$android" -lt 34 ]; then
-   ui_print "";
+   ui_print " ";
    ui_print "Android 13 detected!";
    patch_cmdline "android.legacy_ebpf=" "android.legacy_ebpf=1";
 fi
@@ -75,3 +75,29 @@ fi
 
 write_boot;
 ## end boot install
+
+### Install KPM tools (kpmcli + hello.kpm + test script)
+# Kernel nay co CONFIG_KPM=y, superkey = "lostprime".
+# Tools nam trong thu muc kpm/ cua zip (doc lap voi Image/dtb).
+ui_print " ";
+ui_print "Installing KPM tools...";
+
+KPMDST=/data/adb/ksu/kpm;
+mkdir -p $KPMDST;
+cp -f $home/kpm/kpmcli $KPMDST/kpmcli;
+cp -f $home/kpm/kptools-android $KPMDST/kptools;
+cp -f $home/kpm/hello.kpm $KPMDST/hello.kpm;
+cp -f $home/kpm/test-kpm.sh $KPMDST/test-kpm.sh;
+chmod 755 $KPMDST/kpmcli $KPMDST/kptools $KPMDST/test-kpm.sh;
+chmod 644 $KPMDST/hello.kpm;
+
+ui_print "  kpmcli     -> $KPMDST/kpmcli";
+ui_print "  kptools    -> $KPMDST/kptools";
+ui_print "  hello.kpm  -> $KPMDST/hello.kpm";
+ui_print "  test-kpm   -> $KPMDST/test-kpm.sh";
+ui_print " ";
+ui_print "KPM superkey: lostprime";
+ui_print "Test sau khi boot:";
+ui_print "  su -c 'sh /data/adb/ksu/kpm/test-kpm.sh'";
+ui_print " ";
+## end KPM tools install

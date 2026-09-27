@@ -144,3 +144,14 @@ out/
 *.profdata
 dtb
 zImage
+
+# LostPrime: local build artifacts, flashable output and working notes
+# (kept out of the published tree - build with build_sukisu*.sh)
+AnyKernel3/Image
+AnyKernel3/dtbo.img
+AnyKernel3/kpm/
+/kpm/
+OC_NOTES.md
+PROJECT_LOG_*.md
+build_sukisu.sh
+build_sukisu_kpm.sh
